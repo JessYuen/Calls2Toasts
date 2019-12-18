@@ -26,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        landlineCountTv = findViewById(R.id.landlineCountTv);
+        mobileCountTv = findViewById(R.id.mobileCountTv);
+        incomingNoTv = findViewById(R.id.incomingNoTv);
+
+        landlineCount = Integer.parseInt(landlineCountTv.getText().toString());
+        mobileCount = Integer.parseInt(mobileCountTv.getText().toString());
+
         List<String> wantedPermissions = new ArrayList<>();
 
         wantedPermissions.add(Manifest.permission.CALL_PHONE);
@@ -34,20 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(this, wantedPermissions.toArray(new String[wantedPermissions.size()]), 0);
 
-        landlineCountTv = findViewById(R.id.landlineCountTv);
-        mobileCountTv = findViewById(R.id.mobileCountTv);
-        incomingNoTv = findViewById(R.id.incomingNoTv);
-
-        landlineCount = Integer.parseInt(landlineCountTv.getText().toString());
-        mobileCount = Integer.parseInt(mobileCountTv.getText().toString());
-
         registerReceiver(new UpdateTvReceiver(), new IntentFilter("intent.filter.data"));
 
 
     }
 
-    // this inner class is the broadcast receiver handler that will catch
-    // all messages (announcements or broadcasts) from the service
+    // this inner class is the broadcast receiver handler that is used get data from the
+    // MyCallsReceiver and update the appropriate textviews
     class UpdateTvReceiver extends BroadcastReceiver {
 
         // this method will be invoked each time the services sends a new broadcast
