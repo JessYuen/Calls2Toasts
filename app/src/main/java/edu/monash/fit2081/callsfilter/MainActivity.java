@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         wantedPermissions.add(Manifest.permission.CALL_PHONE);
         wantedPermissions.add(Manifest.permission.READ_CALL_LOG);
         wantedPermissions.add(Manifest.permission.READ_PHONE_STATE);
+        wantedPermissions.add(Manifest.permission.PROCESS_OUTGOING_CALLS);
 
         ActivityCompat.requestPermissions(this, wantedPermissions.toArray(new String[wantedPermissions.size()]), 0);
 
