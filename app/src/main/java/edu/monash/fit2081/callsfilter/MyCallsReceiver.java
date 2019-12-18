@@ -1,0 +1,52 @@
+package edu.monash.fit2081.callsfilter;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Toast;
+
+public class MyCallsReceiver extends BroadcastReceiver {
+    Context self;
+    static TelephonyManager telephonyManager;
+    String incoming, code;
+
+    public void onReceive(Context context, Intent intent) {
+
+
+        self = context;
+
+        if (telephonyManager == null) {
+            telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            MyPhoneStateListener PhoneListener = new MyPhoneStateListener();
+            telephonyManager.listen(PhoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+            Log.i(MainActivity.TAG, "onReceive()");
+        }
+
+    }
+
+
+    private class MyPhoneStateListener extends PhoneStateListener {
+        public void onCallStateChanged(int state, String incomingNumber) {
+            Log.i(MainActivity.TAG, "state changed");
+            if (state == 1) {
+                showToast("Number:=" + incomingNumber);
+                incoming = incomingNumber;
+                code = incomingNumber.substring(0,2);
+
+                Intent newIntent = new Intent("intent.filter.data");
+                newIntent.putExtra("code", code);
+                newIntent.putExtra("phoneNo", incoming);
+                Log.i(MainActivity.TAG, "phone: " + incoming + " type: " + code);
+                self.sendBroadcast(newIntent);
+
+            }
+        }
+    }
+
+    void showToast(String msg) {
+        Toast.makeText(self, msg, Toast.LENGTH_LONG).show();
+    }
+}
