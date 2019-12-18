@@ -36,9 +36,10 @@ public class MyCallsReceiver extends BroadcastReceiver {
                 incoming = incomingNumber;
                 code = incomingNumber.substring(0,2);
 
+                // create a new broadcast intent to pass data to MainActiity
                 Intent newIntent = new Intent("intent.filter.data");
-                newIntent.putExtra("code", code);
-                newIntent.putExtra("phoneNo", incoming);
+                newIntent.putExtra("codeKey", code);
+                newIntent.putExtra("phoneNoKey", incoming);
                 Log.i(MainActivity.TAG, "phone: " + incoming + " type: " + code);
                 self.sendBroadcast(newIntent);
 
