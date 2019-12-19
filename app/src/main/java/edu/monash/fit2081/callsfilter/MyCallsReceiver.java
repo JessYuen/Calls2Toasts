@@ -12,6 +12,7 @@ public class MyCallsReceiver extends BroadcastReceiver {
     Context self;
     static TelephonyManager telephonyManager;
     String incoming, code;
+    int stateNo;
 
     public void onReceive(Context context, Intent intent) {
 
@@ -31,19 +32,35 @@ public class MyCallsReceiver extends BroadcastReceiver {
     private class MyPhoneStateListener extends PhoneStateListener {
         public void onCallStateChanged(int state, String incomingNumber) {
             Log.i(MainActivity.TAG, "state changed");
+
+            Intent intent = new Intent("intent.filter.state");
+            Intent newIntent = new Intent("intent.filter.data");
+
+            stateNo = state;
             if (state == 1) {
                 showToast("Number:=" + incomingNumber);
                 incoming = incomingNumber;
                 code = incomingNumber.substring(0,2);
 
                 // create a new broadcast intent to pass data to MainActiity
-                Intent newIntent = new Intent("intent.filter.data");
+//                Intent newIntent = new Intent("intent.filter.data");
                 newIntent.putExtra("codeKey", code);
                 newIntent.putExtra("phoneNoKey", incoming);
-                Log.i(MainActivity.TAG, "phone: " + incoming + " type: " + code);
+                intent.putExtra("stateKey", "Ringing");
+                Log.i(MainActivity.TAG, "phone: " + incoming + " type: " + code + "state: " + String.valueOf(state));
                 self.sendBroadcast(newIntent);
-
             }
+            else if (state == 0) {
+                intent.putExtra("stateKey", "Idle");
+                self.sendBroadcast(intent);
+                Log.i(MainActivity.TAG, "state: " + String.valueOf(state));
+            }
+            else {
+                intent.putExtra("stateKey", "In call");
+                self.sendBroadcast(intent);
+                Log.i(MainActivity.TAG, "state: " + String.valueOf(state));
+            }
+
         }
     }
 

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "new";
     public static final String MOBILE = "04";
 
-    TextView landlineCountTv, mobileCountTv, incomingNoTv;
+    TextView landlineCountTv, mobileCountTv, incomingNoTv, stateTv;
     int landlineCount, mobileCount;
 
     @Override
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         landlineCountTv = findViewById(R.id.landlineCountTv);
         mobileCountTv = findViewById(R.id.mobileCountTv);
         incomingNoTv = findViewById(R.id.incomingNoTv);
+        stateTv = findViewById(R.id.stateNo);
 
         landlineCount = Integer.parseInt(landlineCountTv.getText().toString());
         mobileCount = Integer.parseInt(mobileCountTv.getText().toString());
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         // register an instance of the receiver created within this activity to subscribe
         // to a broadcast with an action string: "intent.filter.data"
         registerReceiver(new UpdateTvReceiver(), new IntentFilter("intent.filter.data"));
+        registerReceiver(new UpdateState(), new IntentFilter("intent.filter.state"));
+
 
 
     }
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "data received");
 
             // get the data that was passed with the intent
+            String state = intent.getStringExtra("stateKey");
             String code = intent.getStringExtra("codeKey");
             String incomingNo = intent.getStringExtra("phoneNoKey");
 
@@ -85,6 +89,22 @@ public class MainActivity extends AppCompatActivity {
             // update incoming no textview
             incomingNoTv.setText(incomingNo);
 
+            // update state
+            stateTv.setText(state);
+
+
         }
     }
+
+    class UpdateState extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "state received");
+            String state = intent.getStringExtra("stateKey");
+            stateTv.setText(state);
+            Log.i(TAG, state);
+
+        }
+    }
+
 }

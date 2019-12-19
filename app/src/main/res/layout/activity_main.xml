@@ -59,6 +59,7 @@
         android:layout_marginEnd="32dp"
         android:text="0"
         android:textSize="30sp"
+        android:freezesText="true"
         app:layout_constraintBaseline_toBaselineOf="@+id/LandlineTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -71,6 +72,7 @@
         android:layout_marginEnd="32dp"
         android:text="0"
         android:textSize="30sp"
+        android:freezesText="true"
         app:layout_constraintBaseline_toBaselineOf="@+id/mobileTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -82,6 +84,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:textSize="30sp"
+        android:freezesText="true"
         app:layout_constraintBaseline_toBaselineOf="@+id/incomingTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -92,5 +95,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50121653" />
+
+    <TextView
+        android:id="@+id/stateTv"
+        android:layout_width="141dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:text="State"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incomingTv" />
+
+    <TextView
+        android:id="@+id/stateNo"
+        android:layout_width="141dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Idle"
+        android:textSize="30sp"
+        android:freezesText="true"
+        app:layout_constraintBaseline_toBaselineOf="@+id/stateTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
 </android.support.constraint.ConstraintLayout>
